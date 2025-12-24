@@ -1,0 +1,3 @@
+// Error: 'calculate' is used as a variable but not declared
+// (Our flat symbol table treats calls as ID usage)
+var x = calculate();

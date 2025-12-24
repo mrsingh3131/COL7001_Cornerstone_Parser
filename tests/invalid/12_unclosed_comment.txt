@@ -1,0 +1,3 @@
+var x = 10;
+/* This comment starts but never ends
+   The lexer should fail to find the end of file correctly

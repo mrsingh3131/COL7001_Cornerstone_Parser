@@ -1,0 +1,4 @@
+var x = 10;
+if x > 5 {  // Error: Condition must be in ( )
+    x = 0;
+}

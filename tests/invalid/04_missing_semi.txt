@@ -1,0 +1,2 @@
+var x = 10  // Error: Missing semicolon
+var y = 20;

@@ -1,0 +1,3 @@
+func ( ) {      // Error: Missing function name
+    return 1;
+}

@@ -1,0 +1,1 @@
+var 123apple = 10; // Error: Identifiers cannot start with numbers

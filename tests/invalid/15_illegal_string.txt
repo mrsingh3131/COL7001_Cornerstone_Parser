@@ -1,0 +1,1 @@
+var x = "hello"; // Error: Our lexer doesn't support strings (quotes)

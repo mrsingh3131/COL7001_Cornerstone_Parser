@@ -1,0 +1,4 @@
+var x = 10;
+if (x =! 5) { // Error: Should be !=, lexer/parser will see '=' then '!'
+    x = 0;
+}
