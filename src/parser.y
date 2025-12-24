@@ -63,6 +63,11 @@ statement:
     | if_statement
     | while_statement
     | block
+    | error ';' { 
+        yyerrok; // Tells Bison the error is handled
+        printf("Recovering from syntax error at line %d...\n", yylineno);
+        $$ = NULL; // Create an empty node so the AST doesn't crash
+    }
     ;
 
 /* 4. Block: { statements } [cite: 189] */
