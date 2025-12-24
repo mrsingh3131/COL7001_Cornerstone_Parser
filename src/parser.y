@@ -29,10 +29,12 @@ ASTNode *root = NULL; // The final result of our parsing
 %token <str_val> TOK_ID
 %token TOK_VAR TOK_IF TOK_ELSE TOK_WHILE
 %token TOK_EQ TOK_NEQ TOK_LE TOK_GE
+%token TOK_FUNC TOK_RETURN
 
 /* Which types do our grammar rules return? -> ASTNodes */
 %type <node> program statement_list statement block
 %type <node> variable_decl assignment if_statement while_statement
+%type <node> func_definition return_statement
 %type <node> expression equality comparison term factor unary primary
 
 /* Operator Precedence (Lowest to Highest) */
@@ -42,12 +44,12 @@ ASTNode *root = NULL; // The final result of our parsing
 
 %%
 
-/* 1. Program is a list of statements [cite: 179] */
+/* 1. Program is a list of statements */
 program:
     statement_list { root = $1; }
     ;
 
-/* 2. Statement List: can be empty or a sequence [cite: 181] */
+/* 2. Statement List: can be empty or a sequence */
 statement_list:
     /* empty */ { $$ = NULL; }
     | statement statement_list {
@@ -60,13 +62,15 @@ statement_list:
     }
     ;
 
-/* 3. Types of Statements [cite: 183] */
+/* 3. Types of Statements */
 statement:
     variable_decl
     | assignment
     | if_statement
     | while_statement
     | block
+    | func_definition
+    | return_statement
     | error ';' { 
         yyerrok; // Tells Bison the error is handled
         printf("Recovering from syntax error at line %d...\n", yylineno);
@@ -74,12 +78,12 @@ statement:
     }
     ;
 
-/* 4. Block: { statements } [cite: 189] */
+/* 4. Block: { statements }*/
 block:
     '{' statement_list '}' { $$ = create_block($2); }
     ;
 
-/* 5. Variable Decl: var x; OR var x = 5; [cite: 191] */
+/* 5. Variable Decl: var x; OR var x = 5;*/
 variable_decl:
     TOK_VAR TOK_ID ';' { 
         $$ = create_decl($2, NULL); 
@@ -89,14 +93,14 @@ variable_decl:
     }
     ;
 
-/* 6. Assignment: x = 10; [cite: 192] */
+/* 6. Assignment: x = 10;*/
 assignment:
     TOK_ID '=' expression ';' { 
         $$ = create_assign($1, $3); 
     }
     ;
 
-/* 7. If Statement [cite: 194] */
+/* 7. If Statement*/
 if_statement:
     TOK_IF '(' expression ')' statement { 
         $$ = create_if($3, $5, NULL); 
@@ -106,14 +110,26 @@ if_statement:
     }
     ;
 
-/* 8. While Loop [cite: 195] */
+/* 8. While Loop  */
 while_statement:
     TOK_WHILE '(' expression ')' statement { 
         $$ = create_while($3, $5); 
     }
     ;
 
-/* --- EXPRESSION LOGIC (Stratified for Precedence) [cite: 196-214] --- */
+func_definition:
+    TOK_FUNC TOK_ID '(' ')' block { 
+        $$ = create_func($2, $5); 
+    }
+    ;
+
+return_statement:
+    TOK_RETURN expression ';' { 
+        $$ = create_return($2); 
+    }
+    ;
+
+/*EXPRESSION LOGIC (Stratified for Precedence)*/
 
 expression:
     equality
@@ -157,6 +173,7 @@ unary:
 primary:
     TOK_NUM { $$ = create_num($1); }
     | TOK_ID { $$ = create_var($1); }
+    | TOK_ID '(' ')' { $$ = create_call($1, NULL); } /* Simple function call */
     | '(' expression ')' { $$ = $2; }
     ;
 

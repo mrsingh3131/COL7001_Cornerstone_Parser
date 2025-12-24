@@ -1,16 +1,21 @@
 // src/ast.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "ast.h"
+
 
 // Helper to safely allocate memory
 ASTNode* new_node(NodeType type) {
     ASTNode *node = (ASTNode*)malloc(sizeof(ASTNode));
+    if (!node) {
+        perror("malloc failed");
+        exit(1);
+    }
     node->type = type;
-    node->left = NULL;
-    node->right = NULL;
-    node->else_branch = NULL;
-    node->next = NULL;
-    node->id = NULL;
-    node->op = NULL;
+    node->left = node->right = node->else_branch = node->next = NULL;
+    node->id = node->op = NULL;
+    node->int_val = 0;
     return node;
 }
 
@@ -69,6 +74,26 @@ ASTNode* create_block(ASTNode *statements) {
     return node;
 }
 
+ASTNode* create_func(char* name, ASTNode* body) {
+    ASTNode* node = new_node(NODE_FUNC);
+    node->id = strdup(name); 
+    node->left = body;
+    return node;
+}
+
+ASTNode* create_return(ASTNode* expr) {
+    ASTNode* node = new_node(NODE_RETURN);
+    node->left = expr;
+    return node;
+}
+
+ASTNode* create_call(char* name, ASTNode* arg) {
+    ASTNode* node = new_node(NODE_CALL);
+    node->id = strdup(name);
+    node->left = arg;
+    return node;
+}
+
 // Simple recursive printer to see our tree structure
 void print_ast(ASTNode *node, int level) {
     if (!node) return;
@@ -85,6 +110,9 @@ void print_ast(ASTNode *node, int level) {
         case NODE_IF: printf("IF\n"); break;
         case NODE_WHILE: printf("WHILE\n"); break;
         case NODE_BLOCK: printf("BLOCK\n"); break;
+        case NODE_FUNC: printf("FUNC DEF: %s\n", node->id); break;
+        case NODE_RETURN: printf("RETURN\n"); break;
+        case NODE_CALL: printf("CALL: %s()\n", node->id); break;
     }
 
     print_ast(node->left, level + 1);
@@ -92,5 +120,5 @@ void print_ast(ASTNode *node, int level) {
     if (node->else_branch) print_ast(node->else_branch, level + 1);
     
     // Print the next statement in the list (at the same level)
-    print_ast(node->next, level); 
+    if (node->next) print_ast(node->next, level);
 }

@@ -15,7 +15,10 @@ typedef enum {
     NODE_BLOCK,     // "{ ... }"
     NODE_BIN_OP,    // "x + 5" or "x < 10"
     NODE_NUM,       // "10"
-    NODE_VAR        // "x" (using a variable)
+    NODE_VAR,      // "x" (using a variable)
+    NODE_FUNC,      // Function Definition "func f() { ... }"
+    NODE_RETURN,    // Return statement "return x;"
+    NODE_CALL       // Function call "f()" */
 } NodeType;
 
 // The Main Node Structure
@@ -34,6 +37,7 @@ typedef struct ASTNode {
     // Children (The tree structure)
     struct ASTNode *left;
     struct ASTNode *right;
+    struct ASTNode *third;
     struct ASTNode *else_branch; // Only for IF-ELSE
     struct ASTNode *next;        // To link statements in a list
 } ASTNode;
@@ -50,5 +54,9 @@ ASTNode* create_block(ASTNode *statements);
 
 // Helper to print the tree (for debugging)
 void print_ast(ASTNode *node, int level);
+
+ASTNode* create_func(char* name, ASTNode* body);
+ASTNode* create_return(ASTNode* expr);
+ASTNode* create_call(char* name, ASTNode* arg);
 
 #endif

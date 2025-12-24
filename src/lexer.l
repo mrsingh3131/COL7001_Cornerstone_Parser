@@ -23,6 +23,8 @@ void yyerror(const char *s);
 "if"                { return TOK_IF; }
 "else"              { return TOK_ELSE; }
 "while"             { return TOK_WHILE; }
+"func"              { return TOK_FUNC; }
+"return"            { return TOK_RETURN; }
 
 [0-9]+              { yylval.int_val = atoi(yytext); return TOK_NUM; }
 
