@@ -1,0 +1,6 @@
+lab2b_parser.dSYM
+
+lab2b_parser
+src/lex.yy.c
+src/parser.tab.c
+src/parser.tab.h
