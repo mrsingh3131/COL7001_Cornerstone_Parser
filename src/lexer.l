@@ -11,6 +11,8 @@ void yyerror(const char *s);
 /* Option to track line numbers automatically */
 %option yylineno
 %option noyywrap
+%option nounput
+%option noinput
 
 %%
 
