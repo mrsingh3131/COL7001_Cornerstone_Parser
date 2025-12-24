@@ -17,6 +17,7 @@ void yyerror(const char *s);
 %%
 
 "//".* { /* Ignore single line comments */ }
+"/*"([^*]|\*+[^*/])*(\*+"/")        { /* Ignore multi-line comments */ }
 [ \t\n\r]+          { /* Ignore whitespace */ }
 
 "var"               { return TOK_VAR; }
