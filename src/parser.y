@@ -12,7 +12,9 @@ void yyerror(const char *s);
 ASTNode *root = NULL; // The final result of our parsing
 %}
 
+/* 1. ThiS code tells Bison to give detailed error messages instead of just "syntax error" */
 %error-verbose
+/* 2. Expect 1 shift/reduce conflict (the dangling else) */
 %expect 1
 
 /* This defines the types our tokens and rules can return */
