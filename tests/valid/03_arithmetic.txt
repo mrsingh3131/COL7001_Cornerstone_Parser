@@ -1,0 +1,6 @@
+var a = 10;
+var b = 5;
+var c = 2;
+var res1 = a + b * c;     // Should be 20
+var res2 = (a + b) * c;   // Should be 30
+var res3 = -a + 5;        // Unary minus test

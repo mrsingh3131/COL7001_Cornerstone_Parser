@@ -1,0 +1,3 @@
+func pi() { return 3; }
+var radius = 10;
+var area = pi() * radius * radius;

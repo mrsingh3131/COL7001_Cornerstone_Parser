@@ -1,0 +1,18 @@
+// Calculate final balance
+func getInterest() {
+    return 5;
+}
+
+var balance = 100;
+var years = 0;
+
+while (years < 3) {
+    balance = balance + getInterest();
+    years = years + 1;
+}
+
+var rich = 0;
+if (balance > 110) {
+    rich = 1;
+}
+return rich;

@@ -1,0 +1,4 @@
+func myFunc() {
+    var local = 100;
+    return local;
+}

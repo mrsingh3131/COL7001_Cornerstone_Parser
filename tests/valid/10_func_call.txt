@@ -1,0 +1,4 @@
+func getVal() {
+    return 42;
+}
+var x = getVal();

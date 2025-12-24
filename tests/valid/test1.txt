@@ -1,2 +1,0 @@
-x = 10; // Error: x is not declared yet
-var x = 5;

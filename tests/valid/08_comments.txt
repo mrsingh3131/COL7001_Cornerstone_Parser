@@ -1,0 +1,5 @@
+/* Multi-line 
+   comment test */
+var x = 10; // Single line comment
+// var hidden = 5; 
+var y = 20; /* inline comment */

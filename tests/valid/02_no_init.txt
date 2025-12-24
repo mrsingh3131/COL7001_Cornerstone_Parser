@@ -1,0 +1,3 @@
+var status;
+status = 1;
+var result = status;

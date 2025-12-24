@@ -1,0 +1,7 @@
+// Testing multiple top-level statements
+var a = 1;
+a = a + 10;
+var b = a / 2;
+if (b != 0) {
+    b = 100;
+}
