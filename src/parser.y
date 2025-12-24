@@ -51,8 +51,12 @@ program:
 statement_list:
     /* empty */ { $$ = NULL; }
     | statement statement_list {
-        $1->next = $2; // Link the current statement to the rest
-        $$ = $1;
+        if ($1 == NULL) { 
+            $$ = $2; // If current statement was an error, just skip to next
+        } else {
+            $1->next = $2;
+            $$ = $1;
+        }
     }
     ;
 
