@@ -1,16 +1,2 @@
-// This is a single-line comment at the start
-var x = 10; // Comment after a statement
-
-/* This is a multi-line comment
-   It should be completely ignored by the parser
-*/
-
-var y = 20;
-
-func test() {
-    /* Nested style comment inside a function */
-    var result = x + y;
-    return result;
-}
-
-// Final check: var z = 100; (This line should NOT be parsed)
+x = 10; // Error: x is not declared yet
+var x = 5;
