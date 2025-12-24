@@ -12,6 +12,9 @@ void yyerror(const char *s);
 ASTNode *root = NULL; // The final result of our parsing
 %}
 
+%error-verbose
+%expect 1
+
 /* This defines the types our tokens and rules can return */
 %union {
     int int_val;      // For integers (10)
