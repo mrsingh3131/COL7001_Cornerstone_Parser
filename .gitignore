@@ -4,3 +4,4 @@ lab2b_parser
 src/lex.yy.c
 src/parser.tab.c
 src/parser.tab.h
+.DS_Store
